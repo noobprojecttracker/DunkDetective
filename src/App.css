@@ -36,3 +36,95 @@
     transform: rotate(360deg);
   }
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+body{
+  font-family: 'Roboto';
+}
+
+.header{
+  background-color: #8cbf6f;
+  height: 4rem;
+  line-height: 4rem;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.anon{
+  width: 200px;
+  margin-bottom: -20px;
+}
+
+.game-name{
+  text-transform: uppercase;
+  font-family: 'Lato';
+  font-weight: bolder;
+}
+
+.input{
+  display: flex;
+  justify-content: center;
+}
+
+.new-guess{
+  width: 12rem;
+}
+
+.guess-text{
+  border: 1.5px solid black;
+  border-radius: 5px;
+  width: 200px;
+  height: 25px;
+}
+
+.guess-text:hover{
+  background-color: rgb(214, 214, 214);
+  transition: all 0.5s;
+}
+
+.guess-button{
+  cursor: pointer;
+  border: none;
+  margin-left: 5px;
+  background-color: rgb(183, 183, 183);
+}
+
+.guess-button:hover{
+  background-color: rgb(214, 214, 214);
+  transition: background-color .5s;
+
+}
+
+.table-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.guess-table{
+  text-align: left;
+  border-collapse: separate;
+  border-spacing: 70px 0;
+  width: 100%;
+}
+
+.headers{
+  width: 10%;
+}
+
+.guess-table td{
+  text-align: left;
+  padding-top: 15px;
+}
+
+#odd{
+  background-color: rgb(155, 155, 155);
+}
+
+#even{
+  background-color: rgb(199, 199, 199);
+}

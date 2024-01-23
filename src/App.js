@@ -1,23 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import Header from './Components/Header';
+import GameIntro from './Components/GameIntro';
+import NewGuess from './Components/NewGuess';
+import PreviousGuess from './Components/PreviousGuess';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <GameIntro />
+      <NewGuess />
+      <PreviousGuess />
     </div>
   );
 }
