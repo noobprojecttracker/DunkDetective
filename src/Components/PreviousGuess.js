@@ -5,6 +5,10 @@ import React from "react";
 // and generate a row for each of them with the data
 
 export default function PreviousGuess(){
+    
+
+    const first = ['a', 'b', 'c', 'd']
+
     return (
         <div className="table-container">
             <table className="guess-table">
@@ -17,21 +21,35 @@ export default function PreviousGuess(){
                     <th id="even">PPG</th>
                 </tr>
                 <tr>
+                    {/* take images from where poeltl takes images
+                    from, use inspect */}
                     <td>Lebron James</td>
                     <td>38</td>
                     <td>Lakers</td>
                     <td>F</td>
-                    <td>6'8</td>
+                    <td id="close-guess">6'8</td>
                     <td>27.3</td>
                 </tr>
                 <tr>
                     <td>Brook Lopez</td>
-                    <td>35</td>
+                    <td id="correct-guess">35</td>
                     <td>Bucks</td>
                     <td>C</td>
                     <td>7'1</td>
                     <td>12.1</td>
                 </tr>
+                {first.map((elem, index) => {
+                    return (
+                        <tr>
+                            <td>{elem}</td>
+                            <td>sdjf</td>
+                            <td>Bucks</td>
+                            <td>G</td>
+                            <td>6'1</td>
+                            <td>28.1</td>
+                        </tr>
+                    )
+                })}
             </table>
         </div>
     )

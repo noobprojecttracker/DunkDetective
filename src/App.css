@@ -65,9 +65,15 @@ body{
   font-weight: bolder;
 }
 
-.input{
+.input-container{
   display: flex;
   justify-content: center;
+}
+
+.input{
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
 .new-guess{
@@ -77,8 +83,8 @@ body{
 .guess-text{
   border: 1.5px solid black;
   border-radius: 5px;
-  width: 200px;
-  height: 25px;
+  width: 220px;
+  height: 35px;
 }
 
 .guess-text:hover{
@@ -96,7 +102,23 @@ body{
 .guess-button:hover{
   background-color: rgb(214, 214, 214);
   transition: background-color .5s;
+}
 
+.dropdown{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 80%;
+}
+
+.dropdown-item{
+  font-size: 1.1rem;
+  text-align: left;
+  margin: 0;
+  padding: 3px;
+  padding-bottom: 8px;
+  border-radius: 2px;
+  font-weight: 300;
 }
 
 .table-container{
@@ -106,19 +128,24 @@ body{
 }
 
 .guess-table{
-  text-align: left;
-  border-collapse: separate;
-  border-spacing: 70px 0;
-  width: 100%;
+  border-spacing: 0px 0;
+  width: 900px;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .headers{
   width: 10%;
+  height: 40px;
 }
 
 .guess-table td{
-  text-align: left;
+  text-align: center;
   padding-top: 15px;
+  height: 80px;
+  border-bottom: .5px solid black;
+  background-color: rgb(245, 245, 245);
+  border-right: .1px solid rgb(224, 224, 224);
 }
 
 #odd{
@@ -127,4 +154,12 @@ body{
 
 #even{
   background-color: rgb(199, 199, 199);
+}
+
+#close-guess{
+  background-color: #FFBB64;
+}
+
+#correct-guess{
+  background-color: #8cbf6f;
 }
