@@ -42,6 +42,7 @@
 
 body{
   font-family: 'Roboto';
+  background-color: #f5f1ec;
 }
 
 .header{
@@ -82,8 +83,7 @@ body{
 
 .guess-text{
   border: 1.5px solid black;
-  border-radius: 5px;
-  width: 220px;
+  width: 320px;
   height: 35px;
 }
 
@@ -97,6 +97,8 @@ body{
   border: none;
   margin-left: 5px;
   background-color: rgb(183, 183, 183);
+  height: 100%;
+  border-radius: 5px;
 }
 
 .guess-button:hover{
@@ -108,17 +110,24 @@ body{
   position: absolute;
   top: 100%;
   left: 0;
-  width: 80%;
+  width: 326px;
+}
+
+#x{
+  background-color: white;
 }
 
 .dropdown-item{
   font-size: 1.1rem;
   text-align: left;
   margin: 0;
-  padding: 3px;
+  padding: 10px;
   padding-bottom: 8px;
-  border-radius: 2px;
   font-weight: 300;
+}
+
+.dropdown-item:hover{
+  cursor: pointer;
 }
 
 .table-container{

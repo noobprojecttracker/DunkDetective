@@ -17,15 +17,24 @@ export default function NewGuess(){
         setValidGuesses(listClone);
     }
 
+    function handleClick(someText){
+        const newName = someText;
+        console.log(someText)
+        setClicked(true);
+        setName(newName);
+    }
+
     const [name, setName] = useState('')
     const [validGuesses, setValidGuesses] = useState([]);
     const [guessesLeft, setGuessesLeft] = useState(8);
+    const [clicked, setClicked] = useState(false);
 
     return (
         <>
         <div className="input-container">
         <div className="input">
-            <input type="text" placeholder={`${guessesLeft} Guesses Remaining...`} className="guess-text"
+            <input type="text" placeholder={clicked === true ? `${name}` : `${guessesLeft} Guesses Remaining...`} 
+            className="guess-text"
             onChange={((e) => {
                 setName(e.target.value);
                 createDropDown()
@@ -36,7 +45,13 @@ export default function NewGuess(){
             <div className="dropdown">
             {validGuesses.map((someName, index) => {
             return (
-                <h1 className="dropdown-item" id={index % 2 === 0 ? 'even': 'odd'}>{someName}</h1>
+                <h1 className="dropdown-item" id="x"
+                onClick={
+                    (() => {
+                        handleClick(someName);
+                    })
+                }
+                >{someName}</h1>
             )
         })}       
             </div>
