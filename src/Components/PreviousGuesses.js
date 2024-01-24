@@ -4,7 +4,7 @@ import React from "react";
 // array of guessed players
 // and generate a row for each of them with the data
 
-export default function PreviousGuess(){
+export default function PreviousGuess({playerData}){
     
 
     const first = ['a', 'b', 'c', 'd']
@@ -38,15 +38,15 @@ export default function PreviousGuess(){
                     <td>7'1</td>
                     <td>12.1</td>
                 </tr>
-                {first.map((elem, index) => {
+                {playerData.map((elem, index) => {
                     return (
-                        <tr>
-                            <td>{elem}</td>
-                            <td>sdjf</td>
-                            <td>Bucks</td>
-                            <td>G</td>
-                            <td>6'1</td>
-                            <td>28.1</td>
+                        <tr key={index}>
+                            <td>{elem.name}</td>
+                            <td>{elem.age}</td>
+                            <td>{elem.team}</td>
+                            <td>{elem.pos}</td>
+                            <td>{elem.height}</td>
+                            <td>{elem.ppg}</td>
                         </tr>
                     )
                 })}

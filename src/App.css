@@ -92,6 +92,10 @@ body{
   transition: all 0.5s;
 }
 
+.guess-text:focus{
+  border: 2px solid red;
+}
+
 .guess-button{
   cursor: pointer;
   border: none;
@@ -111,6 +115,8 @@ body{
   top: 100%;
   left: 0;
   width: 326px;
+  overflow: scroll;
+  max-height: 200px;
 }
 
 #x{
