@@ -4,10 +4,11 @@ import React from "react";
 // array of guessed players
 // and generate a row for each of them with the data
 
-export default function PreviousGuess({playerData}){
+export default function PreviousGuess({playerData, correctData}){
     
+    let totalHeight;
 
-    const first = ['a', 'b', 'c', 'd']
+    const first = ['a', 'b', 'c', 'd'];
 
     return (
         <div className="table-container">
@@ -39,13 +40,19 @@ export default function PreviousGuess({playerData}){
                     <td>12.1</td>
                 </tr>
                 {playerData.map((elem, index) => {
+                    const heightFeet = elem.height[0];
+                    const heightInches = elem.height.slice(2);
+                    // if the height in feet is an integer
+                    if (!isNaN(+heightFeet)){
+                        totalHeight = (12*parseInt(heightFeet)) + parseInt(heightInches);
+                    }
                     return (
                         <tr key={index}>
                             <td>{elem.name}</td>
                             <td>{elem.age}</td>
                             <td>{elem.team}</td>
                             <td>{elem.pos}</td>
-                            <td>{elem.height}</td>
+                            <td id={(totalHeight >= ((correctData.height)-2) && totalHeight <= (correctData.height)+2) ? 'close-guess' : ''}>{elem.height}</td>
                             <td>{elem.ppg}</td>
                         </tr>
                     )

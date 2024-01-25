@@ -34,25 +34,32 @@ export default function NewGuess({playerData, setPlayerData}){
                 (res) => res.json().then((json) => {
                     const results = json;
                     const data = results.data;
+                    let test;
                     data.map((theName, index) => {
                         if (theName.first_name === splitName[0] && theName.last_name === splitName[1]){
                             console.log('Matching player found');
-
                             const playerID = theName.id;
-
                             // fetch to different URL to get PPG
                             fetch(`https://www.balldontlie.io/api/v1/season_averages?player_ids[]=${playerID}&season=2023`).then((res) => res.json().then(
                                 (json) => {
                                     const resultsTwo = json;
                                     const dataTwo = resultsTwo.data;
-                                    setPPG(dataTwo[0].pts);
+                                    test = (dataTwo[0].pts);
+                                    console.log(test);
                                 }
-                            ))
-
-                            const newPlayerData = [...playerData];
-                            const newPlayerObject = {name: splitName[0] + ' ' + splitName[1], age: 21, team: theName.team.full_name, pos: theName.position, height: theName.height_feet + '\'' + theName.height_inches, ppg: ppg};
-                            newPlayerData.push(newPlayerObject)
-                            setPlayerData(newPlayerData)
+                            )).then((something) => {
+                                console.log('now test' + test);
+                                const newPlayerData = [...playerData];
+                                const newPlayerObject = {name: splitName[0] + ' ' + splitName[1], age: 21, team: theName.team.full_name, pos: theName.position, height: theName.height_feet + '\'' + theName.height_inches, ppg: test};
+                                newPlayerData.push(newPlayerObject)
+                                setPlayerData(newPlayerData)
+                            })
+                            
+                            // console.log('now test' + test);
+                            // const newPlayerData = [...playerData];
+                            // const newPlayerObject = {name: splitName[0] + ' ' + splitName[1], age: 21, team: theName.team.full_name, pos: theName.position, height: theName.height_feet + '\'' + theName.height_inches, ppg: test};
+                            // newPlayerData.push(newPlayerObject)
+                            // setPlayerData(newPlayerData)
                         }
                     })
                 })
