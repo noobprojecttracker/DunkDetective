@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 
 // This component needs to loop over an 
 // array of guessed players
@@ -8,56 +9,147 @@ export default function PreviousGuess({playerData, correctData}){
     
     let totalHeight;
 
-    const first = ['a', 'b', 'c', 'd'];
-
+    
     return (
         <div className="table-container">
             <table className="guess-table">
-                <tr className="headers">
-                    <th id="odd">Player Name</th>
-                    <th id="even">Age</th>
-                    <th id="odd">Team</th>
-                    <th id="even">Position</th>
-                    <th id="odd">Height</th>
-                    <th id="even">PPG</th>
-                </tr>
-                <tr>
-                    {/* take images from where poeltl takes images
-                    from, use inspect */}
-                    <td>Lebron James</td>
-                    <td>38</td>
-                    <td>Lakers</td>
-                    <td>F</td>
-                    <td id="close-guess">6'8</td>
-                    <td>27.3</td>
-                </tr>
-                <tr>
-                    <td>Brook Lopez</td>
-                    <td id="correct-guess">35</td>
-                    <td>Bucks</td>
-                    <td>C</td>
-                    <td>7'1</td>
-                    <td>12.1</td>
-                </tr>
-                {playerData.map((elem, index) => {
-                    const heightFeet = elem.height[0];
-                    const heightInches = elem.height.slice(2);
-                    // if the height in feet is an integer
-                    if (!isNaN(+heightFeet)){
-                        totalHeight = (12*parseInt(heightFeet)) + parseInt(heightInches);
-                    }
-                    return (
-                        <tr key={index}>
-                            <td>{elem.name}</td>
-                            <td>{elem.age}</td>
-                            <td>{elem.team}</td>
-                            <td>{elem.pos}</td>
-                            <td id={(totalHeight >= ((correctData.height)-2) && totalHeight <= (correctData.height)+2) ? 'close-guess' : ''}>{elem.height}</td>
-                            <td>{elem.ppg}</td>
-                        </tr>
-                    )
-                })}
+                <thead>
+                    <tr className="headers">
+                        <th id="odd">Player Name</th>
+                        <th id="even">Age</th>
+                        <th id="odd">Team</th>
+                        <th id="even">Conference</th>
+                        {/* <th id="even">Position</th> */}
+                        <th id="even">Height</th>
+                        <th id="odd">PPG</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {playerData.map((elem, index) => {
+                        // Logic for determining class names (IDs)
+                        let ageID, heightID;
+                        let ageArrow;
+                        let heightArrow;
+                        let ppgArrow;
+                        // Logic for ageID
+                        if (elem.age === correctData.age) {
+                            ageID = 'correct-guess';
+                            ageArrow = '';
+                        } else if ((elem.age >= correctData.age - 2) && (elem.age <= correctData.age + 2)) {
+                            ageID = 'close-guess';
+                        } else {
+                            ageID = 'none';
+                        }
+                        if (elem.age > correctData.age){
+                            ageArrow = '↓';
+                        }
+                        else if (elem.age < correctData.age){
+                            ageArrow = '↑';
+                        }
+
+                        // Logic for heightID
+                        if (elem.totalInches === correctData.totalInches) {
+                            heightID = 'correct-guess';
+                            heightArrow = ''
+                        } else if ((elem.totalInches >= correctData.totalInches - 2) && (elem.totalInches <= correctData.totalInches + 2)) {
+                            heightID = 'close-guess';
+                        } else {
+                            heightID = 'none';
+                        }
+                        if (elem.totalInches > correctData.totalInches){
+                            heightArrow = '↓';
+                        }
+                        else if (elem.totalInches < correctData.totalInches){
+                            heightArrow = '↑';
+                        }
+
+                        if (elem.ppg > correctData.ppg){
+                            ppgArrow = '↓';
+                        }
+                        else if (elem.ppg < correctData.ppg){
+                            ppgArrow = '↑';
+                        }
+
+                        console.log('guess inches is ' + elem.totalInches + ' ' + elem.height)
+                        console.log('correct inches is ' + correctData.totalInches + ' ' + correctData.height)
+    
+                        return (
+                            <tr key={index}>
+                                <td>{elem.name}</td>
+                                <td id={ageID}>{elem.age}{ageArrow}</td>
+                                <td id={elem.team === correctData.team ? 'correct-guess' : 'none'}>{elem.team}</td>
+                                <td id={elem.conference === correctData.conference ? 'correct-guess' : 'none'}>{elem.conference}</td>
+                                <td id={heightID}>{elem.height}{heightArrow}</td>
+                                <td>{elem.ppg}{ppgArrow}</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
             </table>
         </div>
     )
 }
+
+    // return (
+    //     <div className="table-container">
+    //         <table className="guess-table">
+    //             <tr className="headers">
+    //                 <th id="odd">Player Name</th>
+    //                 <th id="even">Age</th>
+    //                 <th id="odd">Team</th>
+    //                 <th id="even">Conference</th>
+    //                 {/* <th id="even">Position</th> */}
+    //                 <th id="even">Height</th>
+    //                 <th id="odd">PPG</th>
+    //             </tr>
+    //             {playerData.map((elem, index) => {
+    //                 totalHeight = elem.inches;
+    //                 // determine id for height column
+    //                 if (totalHeight === correctData.inches){
+    //                     heightID = 'correct-guess'
+    //                 }
+    //                 else if ((totalHeight >= ((correctData.inches)-2) && totalHeight <= (correctData.inches)+2)){
+    //                     heightID = 'close-guess'
+    //                     if (totalHeight >= (correctData.inches)){
+    //                         // (() => {
+    //                         //     setHeightArrow('↓')
+    //                         // })();
+                            
+    //                     }
+    //                     else{
+    //                         let x;
+            
+    //                     }
+    //                 }
+    //                 else{
+    //                     heightID = 'none'
+    //                 }
+
+    //                 // determine id for age column
+    //                 if (elem.age === correctData.age) {
+    //                     ageID = 'correct-guess';
+    //                 } else if ((elem.age >= ((correctData.age) - 2) && elem.age <= (correctData.age) + 2)) {
+    //                     ageID = 'close-guess';
+    //                     if (elem.age >= (correctData.age)) {
+    //                         let y;
+    //                     } else {
+    //                         let p;
+    //                     }
+    //                 } else {
+    //                     ageID = 'none';
+    //                 }
+
+    //                 return (
+    //                     <tr key={index}>
+    //                         <td>{elem.name}</td>
+    //                         <td id={ageID}>{elem.age}{ageArrow}</td>
+    //                         <td id={elem.team === correctData.team ? 'correct-guess' : 'none'}>{elem.team}</td>
+    //                         <td id={elem.conference === correctData.conference ? 'correct-guess' : 'none'}>{elem.conference}</td>
+    //                         <td id={heightID}>{elem.height}{heightArrow}</td>
+    //                         <td>{elem.ppg}</td>
+    //                     </tr>
+    //                 )
+    //             })}
+    //         </table>
+    //     </div>
+    // )

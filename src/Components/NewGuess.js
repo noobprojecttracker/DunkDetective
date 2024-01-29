@@ -1,14 +1,23 @@
 import React from "react";
 import { useState } from "react";
 import { playerList } from "./playerList";
+import Popup from 'reactjs-popup';
+import WinModal from "./WinModal";
 
-export default function NewGuess({playerData, setPlayerData}){
+
+
+
+export default function NewGuess({playerData, setPlayerData, correctData, win, setWin}){
+
+    console.log('win name is ' + correctData.name)
 
     function createDropDown(){
         const listClone = [];
         const currentGuess = name;
         playerList.forEach((currName, index) => {
-            if (currName.includes(name)){
+            const lowerName = currName.toLowerCase();
+            const lowerGuess = name.toLowerCase();
+            if (lowerName.includes(lowerGuess)){
                 listClone.push(currName);
             }
         })
@@ -24,49 +33,27 @@ export default function NewGuess({playerData, setPlayerData}){
     }
 
     function submitGuess(){
-        // only continue if the submitted player name is
-        // in the array of valid player names
-        // first find player id
-        if (playerList.includes(name)){
-            setGuessesLeft(guessesLeft-1);
-            let splitName = name.split(" ");
-            fetch(`https://www.balldontlie.io/api/v1/players/?search=${splitName[1]}&per_page=100`).then(
-                (res) => res.json().then((json) => {
-                    const results = json;
-                    const data = results.data;
-                    let test;
-                    data.map((theName, index) => {
-                        if (theName.first_name === splitName[0] && theName.last_name === splitName[1]){
-                            console.log('Matching player found');
-                            const playerID = theName.id;
-                            // fetch to different URL to get PPG
-                            fetch(`https://www.balldontlie.io/api/v1/season_averages?player_ids[]=${playerID}&season=2023`).then((res) => res.json().then(
-                                (json) => {
-                                    const resultsTwo = json;
-                                    const dataTwo = resultsTwo.data;
-                                    test = (dataTwo[0].pts);
-                                    console.log(test);
-                                }
-                            )).then((something) => {
-                                console.log('now test' + test);
-                                const newPlayerData = [...playerData];
-                                const newPlayerObject = {name: splitName[0] + ' ' + splitName[1], age: 21, team: theName.team.full_name, pos: theName.position, height: theName.height_feet + '\'' + theName.height_inches, ppg: test};
-                                newPlayerData.push(newPlayerObject)
-                                setPlayerData(newPlayerData)
-                            })
-                            
-                            // console.log('now test' + test);
-                            // const newPlayerData = [...playerData];
-                            // const newPlayerObject = {name: splitName[0] + ' ' + splitName[1], age: 21, team: theName.team.full_name, pos: theName.position, height: theName.height_feet + '\'' + theName.height_inches, ppg: test};
-                            // newPlayerData.push(newPlayerObject)
-                            // setPlayerData(newPlayerData)
-                        }
-                    })
-                })
-            )
+        // first check if the guess is correct
+        if (name === correctData.name){
+            setWin(true)
         }
-        setName('');
-        setClicked(false);
+        fetch('http://127.0.0.1:5000/newData', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name})
+        }).then(response => {
+            response.json().then(finalPlayerData => {
+                console.log(finalPlayerData)
+                const newPlayerData = [...playerData];
+                newPlayerData.push(finalPlayerData)
+                setPlayerData(newPlayerData)
+            })
+        })
+        setName('')
+        setGuessesLeft(guessesLeft-1)
+        setClicked(false)
     }
 
     const [name, setName] = useState('');
@@ -74,10 +61,13 @@ export default function NewGuess({playerData, setPlayerData}){
     const [guessesLeft, setGuessesLeft] = useState(8);
     const [clicked, setClicked] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [ppg, setPPG] = useState(0);
 
     return (
         <>
+        {/* create a popup for when they win */}
+        {
+            win && <WinModal win={win} correctData={correctData}/>
+        }
         <div className="input-container">
         <div className="input">
             <input type="text" value={clicked === true ? `${name}` : `${guessesLeft} Guesses Remaining...`} 

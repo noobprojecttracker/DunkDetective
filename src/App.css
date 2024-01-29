@@ -56,8 +56,9 @@ body{
 }
 
 .anon{
-  width: 200px;
+  width: 250px;
   margin-bottom: -20px;
+  background-color: transparent;
 }
 
 .game-name{
@@ -140,6 +141,7 @@ body{
   display: flex;
   justify-content: center;
   margin-top: 25px;
+  margin-bottom: 250px;
 }
 
 .guess-table{
@@ -163,6 +165,10 @@ body{
   border-right: .1px solid rgb(224, 224, 224);
 }
 
+.guess-table tr{
+
+}
+
 #odd{
   background-color: rgb(155, 155, 155);
 }
@@ -177,4 +183,50 @@ body{
 
 #correct-guess{
   background-color: #8cbf6f;
+}
+
+.modal-container{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -200px;
+  margin-left: -200px;
+  width: 400px;
+  height: 400px;
+  background-color: rgb(234, 234, 234);
+  box-shadow: 5px 5px rgb(192, 192, 192);
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.modal-header{
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-body{
+  justify-content: center;
+  text-align: center;
+  margin-top: 20px;
+  padding: 5px;
+}
+
+.win-image{
+  width: 100px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.close-modal{
+  width: 50px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
