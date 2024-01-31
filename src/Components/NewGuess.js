@@ -1,17 +1,23 @@
 import React from "react";
 import { useState } from "react";
 import { playerList } from "./playerList";
-import Popup from 'reactjs-popup';
 import WinModal from "./WinModal";
 import HintModal from "./HintModal";
 import LoseModal from "./LoseModal";
 
 // things to reset (consider lifting states)
-// guess count, playerData array, winning player (correctData),
-// the hint, win variable, loss variable
+// guess count (done), playerData array (done), winning player (correctData) (done),
+// the hint, win variable (done), loss variable (done)
 
+export default function NewGuess({playerData, setPlayerData, correctData, win, setWin, loss, setLoss, guessesLeft, setGuessesLeft, reset, setReset, hintGenre}){
 
-export default function NewGuess({playerData, setPlayerData, correctData, win, setWin}){
+    console.log(playerData)
+
+    const [name, setName] = useState('');
+    const [validGuesses, setValidGuesses] = useState([]);
+    const [clicked, setClicked] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [showHint, setShowHint] = useState(false);
 
     console.log('Winning name is ' + correctData.name)
 
@@ -38,6 +44,8 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
     function submitGuess(){
         // first check if the guess is correct
         if (name === correctData.name){
+            setName('')
+            setClicked(false)
             setWin(true)
         }
         if ((playerList.includes(name) && !(name === correctData.name))){
@@ -52,7 +60,6 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
                 const newPlayerData = [...playerData];
                 newPlayerData.push(finalPlayerData)
                 setPlayerData(newPlayerData)
-                
             })
         })
         setName('')
@@ -66,21 +73,11 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
     }
     }
 
-    const [name, setName] = useState('');
-    const [validGuesses, setValidGuesses] = useState([]);
-    const [guessesLeft, setGuessesLeft] = useState(8);
-    const [clicked, setClicked] = useState(false);
-    const [showDropdown, setShowDropdown] = useState(false);
-    const [showHint, setShowHint] = useState(false);
-    const [loss, setLoss] = useState(() => {
-        return (guessesLeft === 0) && !(win)
-    })
-
     return (
         <>
         {/* create a popup for when they win */}
         {
-            win && <WinModal win={win} correctData={correctData}/>
+            win && <WinModal win={win} correctData={correctData} setReset={setReset}/>
         }
         <div className="input-container">
         <div className="input">
@@ -103,7 +100,7 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
             onClick={(() => {setShowHint(true)})}
             >Use Hint</button>
 
-            {loss && <LoseModal loss={loss} correctData={correctData}/>}
+            {loss && <LoseModal loss={loss} correctData={correctData} setReset={setReset}/>}
             {showHint && <HintModal hintGenre={hintGenre} showHint={showHint} setShowHint={setShowHint} correctData={correctData}/>}
             {showDropdown && <div className="dropdown">
             {validGuesses.map((someName, index) => {
@@ -125,6 +122,3 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
         </>
     )
 }
-
-const hintTypes = ['team', 'letter', 'ppg']
-const hintGenre = hintTypes[Math.floor(Math.random() * hintTypes.length)];

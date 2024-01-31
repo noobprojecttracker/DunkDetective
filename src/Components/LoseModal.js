@@ -2,14 +2,17 @@ import React from "react"
 import { useState } from "react"
 import { Modal } from "@mui/base"
 
-export default function LoseModal({correctData, loss}){
+export default function LoseModal({correctData, loss, setReset}){
 
     const [isOpen, setIsOpen] = useState(loss)
 
     return (
         <Modal open={isOpen}>
             <div className="modal-container">
-                <button className="close-modal" onClick={() => {setIsOpen(false)}}>X</button>
+                <button className="close-modal" onClick={() => {
+                    setIsOpen(false)
+                    setReset(true)
+                }}>X</button>
                 <h1 className="modal-header">
                     Epic Fail!
                 </h1>

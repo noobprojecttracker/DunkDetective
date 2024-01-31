@@ -11,9 +11,48 @@ import { useEffect } from 'react';
 
 function App() {
 
-  const [answerObject, setAnswerObject] = useState([]);
-  const [win, setWin] = useState(false);
+  const hintTypes = ['team', 'letter', 'ppg']
 
+  const [answerObject, setAnswerObject] = useState([]); // correctData
+  const [win, setWin] = useState(false);
+  const [guessesLeft, setGuessesLeft] = useState(8);
+  const [playerData, setPlayerData] = useState([])
+  const [reset, setReset] = useState(false);
+  const [loss, setLoss] = useState(() => {
+    return (guessesLeft === 0) && !(win)
+})
+  const [hintGenre, setHintGenre] = useState(() => {
+    return hintTypes[Math.floor(Math.random() * hintTypes.length)];
+  })
+  
+
+
+  useEffect(() => {
+    if (reset){
+      setWin(false)
+      setLoss(false)
+      setGuessesLeft(8)
+      const newPlayerData = [];
+      setPlayerData(newPlayerData);
+
+      const name = playerList[Math.floor(Math.random() * playerList.length)];
+      fetch('http://127.0.0.1:5000/newData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name})
+    }).then(response => {
+      response.json().then(answerData => {
+        setAnswerObject(answerData)
+      })
+    })
+    }
+    setHintGenre(hintTypes[Math.floor(Math.random() * hintTypes.length)])
+
+    setReset(false)
+
+  }, [reset])
 
   useEffect(() => {
     const name = playerList[Math.floor(Math.random() * playerList.length)];
@@ -31,13 +70,12 @@ function App() {
   }, []) // on render, find random player and get their data
 
 
-  const [playerData, setPlayerData] = useState([])
 
   return (
     <div className="App">
       <Header />
       <GameIntro />
-      <NewGuess playerData={playerData} setPlayerData={setPlayerData} correctData={answerObject} win={win} setWin={setWin}/>
+      <NewGuess playerData={playerData} setPlayerData={setPlayerData} correctData={answerObject} win={win} setWin={setWin} loss={loss} setLoss={setLoss} guessesLeft={guessesLeft} setGuessesLeft={setGuessesLeft} reset={reset} setReset={setReset} hintGenre={hintGenre}/>
       <PreviousGuess playerData={playerData} correctData={answerObject}/>
     </div>
   );

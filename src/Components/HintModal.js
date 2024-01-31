@@ -1,6 +1,5 @@
 import React from "react"
 import { Modal } from "@mui/base"
-import { createUnarySpacing } from "@mui/system";
 import { useState } from "react";
 
 export default function HintModal({showHint, correctData, setShowHint, hintGenre}){
