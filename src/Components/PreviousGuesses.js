@@ -15,13 +15,13 @@ export default function PreviousGuess({playerData, correctData}){
             <table className="guess-table">
                 <thead>
                     <tr className="headers">
-                        <th id="odd">Player Name</th>
-                        <th id="even">Age</th>
-                        <th id="odd">Team</th>
-                        <th id="even">Conference</th>
+                        <th id="">Player Name</th>
+                        <th id="">Age</th>
+                        <th id="">Team</th>
+                        <th id="">Conference</th>
                         {/* <th id="even">Position</th> */}
-                        <th id="even">Height</th>
-                        <th id="odd">PPG</th>
+                        <th id="">Height</th>
+                        <th id="">PPG</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,18 +69,15 @@ export default function PreviousGuess({playerData, correctData}){
                         else if (elem.ppg < correctData.ppg){
                             ppgArrow = '↑';
                         }
-
-                        console.log('guess inches is ' + elem.totalInches + ' ' + elem.height)
-                        console.log('correct inches is ' + correctData.totalInches + ' ' + correctData.height)
     
                         return (
                             <tr key={index}>
-                                <td>{elem.name}</td>
+                                <td id={elem.name === correctData.name ? 'correct-guess' : 'none'}>{elem.name}</td>
                                 <td id={ageID}>{elem.age}{ageArrow}</td>
                                 <td id={elem.team === correctData.team ? 'correct-guess' : 'none'}>{elem.team}</td>
                                 <td id={elem.conference === correctData.conference ? 'correct-guess' : 'none'}>{elem.conference}</td>
                                 <td id={heightID}>{elem.height}{heightArrow}</td>
-                                <td>{elem.ppg}{ppgArrow}</td>
+                                <td id={elem.ppg === correctData.ppg ? 'correct-guess' : 'none'}>{elem.ppg}{ppgArrow}</td>
                             </tr>
                         );
                     })}

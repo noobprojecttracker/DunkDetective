@@ -11,10 +11,7 @@ import { useEffect } from 'react';
 
 function App() {
 
-  const [correct, setCorrect] = useState('');
   const [answerObject, setAnswerObject] = useState([]);
-  const [ft, setFt] = useState(0);
-  const [inc, setInc] = useState(0);
   const [win, setWin] = useState(false);
 
 
@@ -38,9 +35,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* <h1>{answerObject.name}</h1>
-      <h1>{answerObject.height}</h1>
-      <h1>{answerObject.inches}</h1> */}
       <Header />
       <GameIntro />
       <NewGuess playerData={playerData} setPlayerData={setPlayerData} correctData={answerObject} win={win} setWin={setWin}/>

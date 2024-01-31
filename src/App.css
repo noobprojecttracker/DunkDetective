@@ -85,7 +85,8 @@ body{
 .guess-text{
   border: 1.5px solid black;
   width: 320px;
-  height: 35px;
+  height: 45px;
+  font-size: 1rem;
 }
 
 .guess-text:hover{
@@ -104,6 +105,22 @@ body{
   background-color: rgb(183, 183, 183);
   height: 100%;
   border-radius: 5px;
+  width: 70px;
+}
+
+.hint-button{
+  cursor: pointer;
+  border: none;
+  margin-left: 5px;
+  background-color: rgb(183, 183, 183);
+  height: 100%;
+  border-radius: 5px;
+  width: 70px;
+}
+
+.hint-button:hover{
+  background-color: rgb(214, 214, 214);
+  transition: background-color .5s;
 }
 
 .guess-button:hover{
@@ -153,7 +170,16 @@ body{
 
 .headers{
   width: 10%;
-  height: 40px;
+  height: 50px;
+  background-color: rgb(245, 245, 245);
+  text-transform: uppercase;
+  font-family: 'Lato';
+  font-weight: bolder;
+  font-size: 1rem;
+}
+
+.guess-table thead{
+  border-bottom: 1px solid black;
 }
 
 .guess-table td{
@@ -165,8 +191,9 @@ body{
   border-right: .1px solid rgb(224, 224, 224);
 }
 
-.guess-table tr{
-
+.guess-table th{
+  border-bottom: .8px solid black;
+  border-right: .8px solid black;
 }
 
 #odd{
@@ -229,4 +256,8 @@ body{
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.close-model:hover{
+  cursor: pointer;
 }

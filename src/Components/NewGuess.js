@@ -3,13 +3,17 @@ import { useState } from "react";
 import { playerList } from "./playerList";
 import Popup from 'reactjs-popup';
 import WinModal from "./WinModal";
+import HintModal from "./HintModal";
+import LoseModal from "./LoseModal";
 
-
+// things to reset (consider lifting states)
+// guess count, playerData array, winning player (correctData),
+// the hint, win variable, loss variable
 
 
 export default function NewGuess({playerData, setPlayerData, correctData, win, setWin}){
 
-    console.log('win name is ' + correctData.name)
+    console.log('Winning name is ' + correctData.name)
 
     function createDropDown(){
         const listClone = [];
@@ -21,7 +25,6 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
                 listClone.push(currName);
             }
         })
-        console.log(listClone)
         setValidGuesses(listClone);
     }
 
@@ -37,6 +40,7 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
         if (name === correctData.name){
             setWin(true)
         }
+        if ((playerList.includes(name) && !(name === correctData.name))){
         fetch('http://127.0.0.1:5000/newData', {
             method: 'POST',
             headers: {
@@ -45,15 +49,21 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
             body: JSON.stringify({name})
         }).then(response => {
             response.json().then(finalPlayerData => {
-                console.log(finalPlayerData)
                 const newPlayerData = [...playerData];
                 newPlayerData.push(finalPlayerData)
                 setPlayerData(newPlayerData)
+                
             })
         })
         setName('')
         setGuessesLeft(guessesLeft-1)
         setClicked(false)
+        // once guess is made, if it was their last guess and it was
+        // not correct, show lose modal
+        if ((guessesLeft === 1)){
+            setLoss(true);
+        }
+    }
     }
 
     const [name, setName] = useState('');
@@ -61,6 +71,10 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
     const [guessesLeft, setGuessesLeft] = useState(8);
     const [clicked, setClicked] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [showHint, setShowHint] = useState(false);
+    const [loss, setLoss] = useState(() => {
+        return (guessesLeft === 0) && !(win)
+    })
 
     return (
         <>
@@ -84,7 +98,13 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
             <button className="guess-button"
             onClick={submitGuess}
             >Guess</button>
+             {/* Hint modal button logic */}
+            <button className="hint-button"
+            onClick={(() => {setShowHint(true)})}
+            >Use Hint</button>
 
+            {loss && <LoseModal loss={loss} correctData={correctData}/>}
+            {showHint && <HintModal hintGenre={hintGenre} showHint={showHint} setShowHint={setShowHint} correctData={correctData}/>}
             {showDropdown && <div className="dropdown">
             {validGuesses.map((someName, index) => {
             return (
@@ -105,3 +125,6 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
         </>
     )
 }
+
+const hintTypes = ['team', 'letter', 'ppg']
+const hintGenre = hintTypes[Math.floor(Math.random() * hintTypes.length)];
