@@ -4,6 +4,7 @@ import { playerList } from "./playerList";
 import WinModal from "./WinModal";
 import HintModal from "./HintModal";
 import LoseModal from "./LoseModal";
+import DivisionsModal from "./DivisionsModal";
 
 // things to reset (consider lifting states)
 // guess count (done), playerData array (done), winning player (correctData) (done),
@@ -18,6 +19,7 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
     const [clicked, setClicked] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
     const [showHint, setShowHint] = useState(false);
+    const [showDivs, setShowDivs] = useState(false)
 
     console.log('Winning name is ' + correctData.name)
 
@@ -91,15 +93,29 @@ export default function NewGuess({playerData, setPlayerData, correctData, win, s
                 setName(e.target.value);
                 createDropDown()
             })}
+            onBlur={() => {
+                if (!(name)){
+                    setClicked(false)
+                    setShowDropdown(false)
+                }
+            }}
             ></input>
             <button className="guess-button"
             onClick={submitGuess}
             >Guess</button>
+
              {/* Hint modal button logic */}
             <button className="hint-button"
             onClick={(() => {setShowHint(true)})}
             >Use Hint</button>
 
+            <button className="hint-button"
+            onClick={(() => {
+                setShowDivs(true)
+            })}
+            >View Divisions</button>
+
+            {showDivs && <DivisionsModal showDivs={showDivs}/>}
             {loss && <LoseModal loss={loss} correctData={correctData} setReset={setReset}/>}
             {showHint && <HintModal hintGenre={hintGenre} showHint={showHint} setShowHint={setShowHint} correctData={correctData}/>}
             {showDropdown && <div className="dropdown">

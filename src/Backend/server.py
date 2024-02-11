@@ -7,8 +7,43 @@ app = Flask(__name__)
 CORS(app)
 
 conferences = {
-    'West': ['LAL', 'LAC', 'DEN', 'UTA', 'PHO', 'POR', 'DAL', 'MEM', 'GSW', 'SAS', 'NOP', 'SAC', 'MIN', 'OKC', 'HOU'],
-    'East': ['MIL', 'TOR', 'BOS', 'MIA', 'IND', 'PHI', 'BRK', 'ORL', 'WAS', 'CHO', 'CHI', 'NYK', 'DET', 'ATL', 'CLE']
+    'West': ['LAL', 'LAC', 'DEN', 'UTA', 'PHO', 'PHX', 'POR', 'DAL', 'MEM', 'GSW', 'SAS', 'NOP', 'SAC', 'MIN', 'OKC', 'HOU'],
+    'East': ['MIL', 'TOR', 'BOS', 'MIA', 'IND', 'PHI', 'BRK', 'ORL', 'WAS', 'CHO', 'CHA', 'CHI', 'NYK', 'DET', 'ATL', 'CLE']
+}
+
+divisions = {
+    'LAL': 'Pacific',
+    'LAC': 'Pacific',
+    'DEN': 'Northwest',
+    'UTA': 'Northwest',
+    'PHO': 'Pacific',
+    'PHX': 'Pacific', # suns twice
+    'POR': 'Northwest',
+    'DAL': 'Southwest',
+    'MEM': 'Southwest',
+    'GSW': 'Pacific',
+    'SAS': 'Southwest',
+    'NOP': 'Southwest',
+    'SAC': 'Pacific',
+    'MIN': 'Northwest',
+    'OKC': 'Northwest',
+    'HOU': 'Southwest',
+    'MIL': 'Central',
+    'TOR': 'Atlantic',
+    'BOS': 'Atlantic',
+    'MIA': 'Southeast',
+    'IND': 'Central',
+    'PHI': 'Atlantic',
+    'BRK': 'Atlantic',
+    'ORL': 'Southeast',
+    'WAS': 'Southeast',
+    'CHO': 'Southeast',
+    'CHA': 'Southeast', #hornets twice
+    'CHI': 'Central',
+    'NYK': 'Atlantic',
+    'DET': 'Central',
+    'ATL': 'Southeast',
+    'CLE': 'Central'
 }
 
 
@@ -39,12 +74,15 @@ def fetch_new_guess_data():
         conference = 'East'
     else:
         conference = 'West'
+    division = divisions[databaseData[0][2]]
     resDict = {'name': databaseData[0][1], 'team': databaseData[0][2], 
     'age': databaseData[0][3], 'height': height, 
     'college': databaseData[0][5], 'draft': databaseData[0][6], 
     'games': databaseData[0][7], 'ppg': databaseData[0][8], 
     'rpg': databaseData[0][9], 'apg': databaseData[0][10],
-    'totalInches': totalInches, 'conference': conference}
+    'totalInches': totalInches, 'conference': conference, 
+    'division': division}
+    print(resDict)
     return resDict
     # [(359, 'Kevin Durant', 'PHX', 34, 208.28, 
     # 'Texas', 2007, 47, 29.1, 6.7, 5.0)]

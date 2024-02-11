@@ -1,3 +1,4 @@
+import { elementAcceptingRef } from "@mui/utils";
 import React, { useEffect, useState } from "react";
 
 // This component needs to loop over an 
@@ -17,6 +18,7 @@ export default function PreviousGuess({playerData, correctData}){
                         <th id="">Player Name</th>
                         <th id="">Age</th>
                         <th id="">Team</th>
+                        <th id="">Division</th>
                         <th id="">Conference</th>
                         {/* <th id="even">Position</th> */}
                         <th id="">Height</th>
@@ -74,6 +76,7 @@ export default function PreviousGuess({playerData, correctData}){
                                 <td id={elem.name === correctData.name ? 'correct-guess' : 'none'}>{elem.name}</td>
                                 <td id={ageID}>{elem.age}{ageArrow}</td>
                                 <td id={elem.team === correctData.team ? 'correct-guess' : 'none'}>{elem.team}</td>
+                                <td id={elem.division === correctData.division ? 'correct-guess' : 'none'}>{elem.division}</td>
                                 <td id={elem.conference === correctData.conference ? 'correct-guess' : 'none'}>{elem.conference}</td>
                                 <td id={heightID}>{elem.height}{heightArrow}</td>
                                 <td id={elem.ppg === correctData.ppg ? 'correct-guess' : 'none'}>{elem.ppg}{ppgArrow}</td>

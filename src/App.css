@@ -46,6 +46,8 @@ body{
 }
 
 .header{
+  display: flex;
+  flex-direction: column;
   background-color: #8cbf6f;
   height: 4rem;
   line-height: 4rem;
@@ -53,6 +55,12 @@ body{
   font-size: 2rem;
   font-weight: bold;
   color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+.divisions{
+  align-self: flex-end;
 }
 
 .anon{
@@ -191,6 +199,11 @@ body{
   border-right: .1px solid rgb(224, 224, 224);
 }
 
+.guess-table th:hover{
+  background-color: rgb(255, 130, 130);
+  transition: all 0.4s linear;
+}
+
 .guess-table th{
   border-bottom: .8px solid black;
   border-right: .8px solid black;
@@ -260,4 +273,35 @@ body{
 
 .close-model:hover{
   cursor: pointer;
+}
+
+
+
+.divisions-container{
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -200px;
+  margin-left: -200px;
+  width: 400px;
+  height: 400px;
+  background-color: rgb(234, 234, 234);
+  box-shadow: 5px 5px rgb(192, 192, 192);
+}
+
+.div-table{
+  display: table;
+  margin-top: 50px;
+  border-spacing: 0px 0;
+  width: 900px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+  border-bottom: 1px solid blue;
+  border-top: 1px solid red;
+}
+
+.div-table tr{
+  border-right: 1px solid green;
 }
