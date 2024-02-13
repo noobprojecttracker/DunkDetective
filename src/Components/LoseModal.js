@@ -14,7 +14,7 @@ export default function LoseModal({correctData, loss, setReset}){
                     setReset(true)
                 }}>X</button>
                 <h1 className="modal-header">
-                    Epic Fail!
+                    Epic Fail!!
                 </h1>
                 <hr width="70%"></hr>
                 <img src="https://assets.stickpng.com/images/58428defa6515b1e0ad75ab4.png" className="win-image"></img>
